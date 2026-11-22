@@ -25,16 +25,18 @@ dsh plugin --profile web add dsh-plugin-opencode2api
 | 方式 | 命令 | 前提 |
 |---|---|---|
 | GitHub | `dsh plugin --profile web add github:king-andthe-nice/dsh-plugin-opencode2api` | 能访问 GitHub |
-| 本地包 | `dsh plugin --profile web add ./dsh-plugin-opencode2api-1.1.0.tgz` | 有 12 KB 的 tgz |
-| 局域网 | `dsh plugin --profile web add http://<手机IP>:8000/dsh-plugin-opencode2api-1.1.0.tgz` | 手机先 `python3 -m http.server 8000` |
+| 本地包 | `dsh plugin --profile web add ./dsh-plugin-opencode2api-1.2.0.tgz` | 有 17 KB 的 tgz |
+| 局域网 | `dsh plugin --profile web add http://<手机IP>:8000/dsh-plugin-opencode2api-1.2.0.tgz` | 手机先 `python3 -m http.server 8000` |
 
 装好后引擎会自动下载程序（约 5 MB）、生成配置并在 `0.0.0.0:8080` 启动（本机和局域网都能连）。首次下载失败会每 30 秒重试。
+
+Windows / macOS / Linux 装好后，打开 DSH Web UI（默认 `http://127.0.0.1:3080`）→ **设置 → 本地免费 API**，就能看到状态和操作按钮；手机 App 则在「本地API」胶囊/面板里。
 
 ## 使用
 
 装好后插件会自动把本地 API 注册成模型商「本地免费 API」，模型列表从 `/v1/models` 动态获取。直接在 DSH 的模型选择器里选它下面的免费模型即可，不需要手动填 URL 和 Key。
 
-面板会显示「模型商：已自动配置」。如果没配上，点面板里的「自动配置」重试；仍然失败时再手动接入：
+桌面端在 **设置 → 本地免费 API** 里操作；手机端在「本地API」面板里操作。面板会显示「模型商：已自动配置」。如果没配上，点面板里的「自动配置」重试；仍然失败时再手动接入：
 
 1. 打开「本地免费 API」面板。
 2. 点「复制接入」，得到：
@@ -48,13 +50,31 @@ dsh plugin --profile web add dsh-plugin-opencode2api
 
 3. 在 DSH 里添加 OpenAI 兼容服务商，Base URL 填上面的地址，API Key 填生成的 Key。
 
-## 面板功能
+## 功能（桌面设置页 / 手机面板）
 
 - **启动 / 停止 / 重启 / 重装**：重装会重新下载程序。
 - **仅本机 / 开局域网**：切换监听地址（`127.0.0.1` 或 `0.0.0.0`）。
-- **复制接入 / 复制后台**：复制 API 接入信息或管理后台地址与密码。
+- **复制地址 / 复制 Key / 复制后台信息**：桌面设置页有复制按钮；手机面板有「复制接入 / 复制后台」。
 - **自动配置**：重新把本地 API 注册为模型商「本地免费 API」，并同步最新模型列表。
-- 状态条实时显示运行状态，进程挂掉会自动拉起。
+- **运行日志**：桌面设置页可展开查看最后 40 行；手机看数据目录里的 `opencode2api.log`。
+- 状态实时显示；进程挂掉会自动拉起。
+
+## 界面说明
+
+- **Windows / macOS / Linux（DSH Web UI）**：**设置 → 本地免费 API**，有状态、启动/停止/重启、监听切换、复制地址/Key、自动配置、重装和日志。
+- **dsh-go 手机 App**：有「本地API」胶囊、状态条和原生面板。
+- dsh-go 原生界面（胶囊/状态条/面板）只存在于手机 App；桌面端用的是 DSH Web UI 的设置页，不是 dsh-go 原生面板。
+
+### Windows 装完看不到界面？
+
+1. 先确认插件已装：DSH Web UI → 插件 → **已安装**，应看到 `dsh-plugin-opencode2api`。
+2. 打开 **设置 → 本地免费 API**（1.2.0 起提供桌面设置页）。1.1.0 只有手机原生面板，桌面没有界面。
+3. 如果插件市场里标着「本地开发」，说明装的是本地链接；想用 npm 版先移除再装，然后重启 DSH：
+
+   ```powershell
+   dsh plugin --profile web remove dsh-plugin-opencode2api
+   dsh plugin --profile web add dsh-plugin-opencode2api
+   ```
 
 ## 自动配置
 
@@ -67,14 +87,9 @@ dsh plugin --profile web add dsh-plugin-opencode2api
 
 不想自动配置时，在 DSH 的「设置 → 模型」里删掉「本地免费 API」即可；插件不会再加回来，除非模型列表变化或你点「自动配置」。
 
-## 界面说明
-
-- **dsh-go 手机 App**：有「本地API」胶囊、状态条和面板。
-- **Windows / macOS / Linux 的 DSH**：没有 dsh-go 原生面板；网关照常运行，模型商自动配置，管理用 `http://127.0.0.1:8081` 或 DSH 的模型设置。
-
 ## 管理后台
 
-浏览器打开 `http://127.0.0.1:8081`（或局域网地址），账号 `admin`，初始密码见面板「复制后台」，也可在后台修改。后台可以改密码、查看请求、管理上游 Key 等。
+浏览器打开 `http://127.0.0.1:8081`（或局域网地址），账号 `admin`，初始密码见桌面设置页（仅本机显示）或 `webui-password.txt`；后台改过后以新密码为准。后台可以改密码、查看请求、管理上游 Key 等。
 
 ## 数据目录
 
