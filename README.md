@@ -14,13 +14,19 @@
 
 ## 安装
 
-在 DSH 的插件市场搜索 `dsh-plugin-opencode2api` 安装；或命令行：
+最方便的是 npm（已发布，国内镜像已同步）：
 
 ```sh
-dsh plugin --profile web add github:king-andthe-nice/dsh-plugin-opencode2api
+dsh plugin --profile web add dsh-plugin-opencode2api
 ```
 
-> npm 版发布后也可以 `dsh plugin --profile web add dsh-plugin-opencode2api`。
+其他方式：
+
+| 方式 | 命令 | 前提 |
+|---|---|---|
+| GitHub | `dsh plugin --profile web add github:king-andthe-nice/dsh-plugin-opencode2api` | 能访问 GitHub |
+| 本地包 | `dsh plugin --profile web add ./dsh-plugin-opencode2api-1.1.0.tgz` | 有 12 KB 的 tgz |
+| 局域网 | `dsh plugin --profile web add http://<手机IP>:8000/dsh-plugin-opencode2api-1.1.0.tgz` | 手机先 `python3 -m http.server 8000` |
 
 装好后引擎会自动下载程序（约 5 MB）、生成配置并在 `0.0.0.0:8080` 启动（本机和局域网都能连）。首次下载失败会每 30 秒重试。
 
@@ -60,6 +66,11 @@ dsh plugin --profile web add github:king-andthe-nice/dsh-plugin-opencode2api
 - 模型列表变化时自动更新，没变化不重复写。
 
 不想自动配置时，在 DSH 的「设置 → 模型」里删掉「本地免费 API」即可；插件不会再加回来，除非模型列表变化或你点「自动配置」。
+
+## 界面说明
+
+- **dsh-go 手机 App**：有「本地API」胶囊、状态条和面板。
+- **Windows / macOS / Linux 的 DSH**：没有 dsh-go 原生面板；网关照常运行，模型商自动配置，管理用 `http://127.0.0.1:8081` 或 DSH 的模型设置。
 
 ## 管理后台
 
