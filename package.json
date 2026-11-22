@@ -1,0 +1,88 @@
+{
+  "name": "dsh-plugin-opencode2api",
+  "version": "1.0.0",
+  "description": "One-click install and auto-run opencode2api — a local, free, OpenAI-compatible API gateway — on DSH for Windows, macOS, Linux and Android.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/king-andthe-nice/dsh-plugin-opencode2api.git"
+  },
+  "homepage": "https://github.com/king-andthe-nice/dsh-plugin-opencode2api#readme",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "dsh-go",
+    "opencode",
+    "opencode2api",
+    "gateway",
+    "openai-compatible",
+    "free-api"
+  ],
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+  },
+  "dshGo": {
+    "v": 1,
+    "title": {
+      "zh": "本地免费 API",
+      "en": "Local Free API"
+    },
+    "icon": "server",
+    "contributes": {
+      "composer.actions": [
+        {
+          "id": "open-gateway",
+          "label": {
+            "zh": "本地API",
+            "en": "Local API"
+          },
+          "icon": "server",
+          "effect": [
+            {
+              "type": "open",
+              "page": "panel:gateway"
+            }
+          ]
+        }
+      ],
+      "composer.strip": [
+        {
+          "id": "status",
+          "icon": "server",
+          "panel": "gateway"
+        }
+      ],
+      "panels": [
+        {
+          "id": "gateway",
+          "title": {
+            "zh": "本地免费 API",
+            "en": "Local Free API"
+          },
+          "icon": "server",
+          "placement": [
+            "session.tab",
+            "features",
+            "plugin"
+          ]
+        }
+      ]
+    }
+  }
+}
