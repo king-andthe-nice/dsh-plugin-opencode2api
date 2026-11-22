@@ -1,6 +1,6 @@
 # dsh-plugin-opencode2api · 本地免费 API
 
-一键把 [opencode2api](https://github.com/jasonxu114514/opencode2api) 装进 DSH：自动下载对应平台的程序、生成基础配置、启动并常驻。装好后本机就有一个专属的、兼容 OpenAI 的免费 API；DSH 关闭再打开会自动重启。
+一键把 [opencode2api](https://github.com/jasonxu114514/opencode2api) 装进 DSH：自动下载对应平台的程序、生成配置、启动并常驻，并自动把「本地免费 API」注册成 DSH 的模型商（模型列表从网关动态获取）。装好后本机就有一个专属的、兼容 OpenAI 的免费 API；DSH 关闭再打开会自动重启。
 
 ## 适用平台
 
@@ -26,7 +26,11 @@ dsh plugin --profile web add github:king-andthe-nice/dsh-plugin-opencode2api
 
 ## 使用
 
-1. 打开「本地免费 API」面板（输入框上的 `本地API` 胶囊、状态条，或 全部功能 → 插件）。
+装好后插件会自动把本地 API 注册成模型商「本地免费 API」，模型列表从 `/v1/models` 动态获取。直接在 DSH 的模型选择器里选它下面的免费模型即可，不需要手动填 URL 和 Key。
+
+面板会显示「模型商：已自动配置」。如果没配上，点面板里的「自动配置」重试；仍然失败时再手动接入：
+
+1. 打开「本地免费 API」面板。
 2. 点「复制接入」，得到：
 
    ```text
@@ -36,14 +40,26 @@ dsh plugin --profile web add github:king-andthe-nice/dsh-plugin-opencode2api
    推荐模型：deepseek-v4.1-flash-free
    ```
 
-3. 在 DSH 里添加一个 OpenAI 兼容服务商：Base URL 填上面的地址，API Key 填生成的 Key，模型选 `deepseek-v4.1-flash-free` 等免费模型。
+3. 在 DSH 里添加 OpenAI 兼容服务商，Base URL 填上面的地址，API Key 填生成的 Key。
 
 ## 面板功能
 
 - **启动 / 停止 / 重启 / 重装**：重装会重新下载程序。
 - **仅本机 / 开局域网**：切换监听地址（`127.0.0.1` 或 `0.0.0.0`）。
 - **复制接入 / 复制后台**：复制 API 接入信息或管理后台地址与密码。
+- **自动配置**：重新把本地 API 注册为模型商「本地免费 API」，并同步最新模型列表。
 - 状态条实时显示运行状态，进程挂掉会自动拉起。
+
+## 自动配置
+
+网关就绪后，插件会：
+
+- 把 `http://127.0.0.1:8080/v1` 注册为 `llm-pi-ai` 的提供方 `opencode2api`，显示名「本地免费 API」；
+- 把本地 API Key 写入 DSH 凭据 `OPENCODE2API_API_KEY`（不写进配置文件）；
+- 从 `/v1/models` 读取模型，写入上下文窗口、输出上限、图片输入和推理档位；
+- 模型列表变化时自动更新，没变化不重复写。
+
+不想自动配置时，在 DSH 的「设置 → 模型」里删掉「本地免费 API」即可；插件不会再加回来，除非模型列表变化或你点「自动配置」。
 
 ## 管理后台
 
@@ -56,6 +72,7 @@ $DSH_HOME/dsh-go/opencode2api/      # 默认 ~/.dsh/dsh-go/opencode2api/
 ├── opencode2api                    # 程序
 ├── config.json                     # 网关配置（监听、Key、匿名开关等）
 ├── webui-password.txt              # 后台初始密码（后台改过后会失效）
+├── auto-provider.json              # 自动配置状态（模型列表指纹）
 └── opencode2api.log                # 运行日志
 ```
 
