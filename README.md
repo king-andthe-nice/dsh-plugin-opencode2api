@@ -61,12 +61,12 @@ $DSH_HOME/dsh-go/opencode2api/      # 默认 ~/.dsh/dsh-go/opencode2api/
 
 ## 配置说明
 
-默认开启匿名免费通道，并生成随机 `server_keys` 保护 `/v1/*`。想更稳可以：
+本插件为了开箱即用，默认开启匿名免费通道，并生成随机 `server_keys` 保护 `/v1/*`。注意：上游 opencode2api 本身默认**关闭**匿名，且明确提示匿名流量可能被大量拦截。想更稳可以：
 
 - 在后台填入自己的 Zen / Go Key（`zen_keys` / `go_keys`），或
 - 关闭匿名，只用自己的 Key。
 
-匿名通道可能被上游限流或拦截，仅供个人轻量使用。
+匿名通道由上游提供，可能被限流或拦截，仅供个人轻量使用；请遵守 OpenCode 与各模型服务的条款。
 
 ## 卸载
 
@@ -79,6 +79,17 @@ dsh plugin --profile web remove dsh-plugin-opencode2api
 ## 能力与风险
 
 插件会读写本地文件、下载并运行外部程序、访问网络。请只从可信来源安装；公开分发代理免费模型时，请遵守上游服务条款。
+
+## 出处与许可
+
+本插件是 [opencode2api](https://github.com/jasonxu114514/opencode2api) 的**非官方**安装器，与作者无隶属关系。
+
+- opencode2api：**GPL-3.0-or-later**，源码与许可证见[上游仓库](https://github.com/jasonxu114514/opencode2api)。
+- 本插件**不打包、不修改** opencode2api；安装时从上游 GitHub Releases 下载官方原版二进制，以独立进程运行。
+- 本插件自身代码：**MIT**（见 `LICENSE`）。
+- 上游程序按“无担保”提供；匿名通道可能被上游限流或拦截，长期使用建议在后台填入自己的 Zen / Go Key，并遵守 OpenCode 与各模型服务的条款。
+
+详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
 ## License
 
