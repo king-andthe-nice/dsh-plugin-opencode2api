@@ -1,0 +1,4 @@
+# id: any unique id; name: must equal "name" in package.json.
+- insert:
+    - id: dsh-plugin-opencode2api
+      name: dsh-plugin-opencode2api
