@@ -1,7 +1,7 @@
 {
   "name": "dsh-plugin-opencode2api",
   "version": "1.0.0",
-  "description": "One-click install and auto-run opencode2api — a local, free, OpenAI-compatible API gateway — on DSH for Windows, macOS, Linux and Android.",
+  "description": "Unofficial one-click installer and auto-runner for opencode2api — a local free OpenAI-compatible API gateway — inside DSH (Windows, macOS, Linux, Android).",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/king-andthe-nice/dsh-plugin-opencode2api.git"
@@ -14,7 +14,8 @@
     "lib",
     "cordis.patch.yml",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "keywords": [
     "dsh-plugin",
